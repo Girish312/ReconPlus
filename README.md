@@ -1,5 +1,5 @@
 ## Available Scripts
-Check out live website [https://recon-plus.vercel.app/] https://recon-plus.vercel.app/
+Check out live website [https://recon-plus.vercel.app/] (https://recon-plus.vercel.app/)
 
 In the project directory, you can run:
 
