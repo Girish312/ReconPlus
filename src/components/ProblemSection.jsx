@@ -14,8 +14,7 @@ export default function ProblemSection() {
               "
             >
               {/* Icons row */}
-              <div className="flex flex-row flex-wrap justify-between gap-6">
-
+              <div className="flex flex-row justify-between gap-6">
                 {[
                   {
                     title: 'Suspicious Request Monitoring',
@@ -32,14 +31,15 @@ export default function ProblemSection() {
                 ].map((feature, index) => (
                   <div
                     key={index}
-                    className="flex flex-col items-center text-center space-y-3 flex-1 min-w-[90px]"
+                    className="flex flex-col items-center text-center space-y-3 w-1/3"
                   >
                     <div className="relative">
                       <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl"></div>
                       <img
                         src={feature.icon}
                         alt={feature.title}
-                        className="relative w-24 h-24 sm:w-28 sm:h-28 object-contain"
+                        className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain"
+
                       />
                     </div>
 
@@ -54,11 +54,11 @@ export default function ProblemSection() {
           </div>
 
           {/* RIGHT: Problem text */}
-          <div className="order-1 lg:order-2 space-y-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-justify">
-            <h2 className="text-4xl sm:text-5xl font-bold text-white">
+          <div className="order-1 lg:order-2 space-y-6 px-4 sm:px-6 lg:px-8 text-justify">
+            <h2 className="text-2xl sm:text-4xl font-bold text-white">
               The Problem
             </h2>
-            <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
+            <p className="text-gray-300 text-lg sm:text-xl leading-relaxed">
               Attackers begin by probing ports, endpoints & vulnerabilities long
               before launching a full attack. Most systems detect threats only
               after the damage is done, but ReconnPlus identifies these early-stage

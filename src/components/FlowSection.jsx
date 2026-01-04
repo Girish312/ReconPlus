@@ -1,9 +1,9 @@
 export default function FlowSection() {
   return (
-    <section className="relative py-16 sm:py-20">
+    <section className="relative py-16 sm:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl sm:text-5xl font-bold text-center mb-12 sm:mb-16 animate-fadeIn">
-          <span className="text-white">How ReconnPlus Works</span>
+        <h2 className="text-2xl sm:text-4xl font-bold text-white text-center mb-12 sm:mb-16 animate-fadeIn">
+          How ReconnPlus Works
         </h2>
 
         {/* Flowchart - Responsive scaling */}
