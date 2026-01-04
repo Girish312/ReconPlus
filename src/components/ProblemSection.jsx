@@ -39,7 +39,7 @@ export default function ProblemSection() {
                       <img
                         src={feature.icon}
                         alt={feature.title}
-                        className="relative w-14 h-14 sm:w-16 sm:h-16 object-contain"
+                        className="relative w-24 h-24 sm:w-28 sm:h-28 object-contain"
                       />
                     </div>
 
