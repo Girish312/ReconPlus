@@ -43,7 +43,7 @@ export default function ProblemSection() {
                       />
                     </div>
 
-                    <p className="text-xs sm:text-sm font-semibold text-white leading-snug">
+                    <p className="text-sm sm:text-base font-semibold text-white leading-snug">
                       {feature.title}
                     </p>
                   </div>
