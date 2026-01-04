@@ -1,7 +1,7 @@
-import ReconnPlus from './ReconnPlus';
+import Landing from "./pages/Landing";
 
 function App() {
-  return <ReconnPlus />;
+  return <Landing />;
 }
 
 export default App;
