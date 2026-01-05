@@ -5,19 +5,19 @@ export default function KeyFeatures() {
     {
       title: "Real-time Detection",
       description:
-        "Get instant alerts when someone scans, probes, or targets your system.",
+        "Get instant alerts when someone scans, probes or targets your system.",
       icon: "/images/features/realtime-detection.png",
     },
     {
       title: "AI-Driven Accuracy",
       description:
-        "Smarter detection with fewer false alarms — learns from real attack patterns.",
+        "Smarter detection with fewer false alarms, learns from real attack patterns.",
       icon: "/images/features/ai-accuracy.png",
     },
     {
       title: "Visual Dashboard",
       description:
-        "See all logs, alerts, trends, and activity clearly in a user-friendly UI.",
+        "See all logs, alerts, trends and activity clearly in a user-friendly UI.",
       icon: "/images/features/dashboard.png",
     },
     {
