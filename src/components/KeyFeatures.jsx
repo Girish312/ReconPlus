@@ -148,7 +148,7 @@ export default function KeyFeatures() {
                     {feature.title}
                   </h3>
 
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-gray-400 text-justify">
                     {feature.description}
                   </p>
                 </div>
