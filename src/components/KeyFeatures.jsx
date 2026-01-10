@@ -104,7 +104,7 @@ export default function KeyFeatures() {
                 >
                   <div className="bg-[#0b1622] rounded-3xl p-8 flex flex-col items-center text-center space-y-6 shadow-[0_0_40px_rgba(34,211,238,0.05)]">
                     <div className="w-20 h-20 rounded-full bg-[#0f2533] flex items-center justify-center">
-                      <img src={feature.icon} alt={feature.title} className="w-10 h-10" />
+                      <img src={feature.icon} alt={feature.title} className="w-20 h-20" />
                     </div>
                     <h3 className="text-lg sm:text-xl font-semibold text-white">
                       {feature.title}
@@ -127,7 +127,7 @@ export default function KeyFeatures() {
               className="bg-[#0b1622] rounded-3xl p-8 flex flex-col items-center text-center space-y-6 shadow-[0_0_40px_rgba(34,211,238,0.05)]"
             >
               <div className="w-20 h-20 rounded-full bg-[#0f2533] flex items-center justify-center">
-                <img src={feature.icon} alt={feature.title} className="w-10 h-10" />
+                <img src={feature.icon} alt={feature.title} className="w-20 h-20" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-white">
                 {feature.title}
