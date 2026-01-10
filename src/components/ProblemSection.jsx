@@ -53,7 +53,7 @@ export default function ProblemSection() {
           </div>
 
           {/* RIGHT: Problem text */}
-          <div className="order-1 lg:order-2 space-y-6 px-4 sm:px-6 lg:px-8 text-justify">
+          <div className="order-1 lg:order-2 space-y-6 px-4 sm:px-6 lg:px-8 text-left">
             <h2 className="text-2xl sm:text-4xl font-bold text-white">
               The Problem
             </h2>

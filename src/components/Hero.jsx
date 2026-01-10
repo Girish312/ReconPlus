@@ -33,7 +33,7 @@ export default function Hero() {
                             Detect threats <br className="hidden sm:block" />
                             before they detect you.
                         </h1>
-                        <p className="text-gray-300 text-lg sm:text-xl md:text-xl leading-relaxed max-w-lg mx-auto lg:mx-0 text-justify">
+                        <p className="text-gray-300 text-lg sm:text-xl md:text-xl leading-relaxed max-w-lg mx-auto lg:mx-0 text-left">
                             An AI powered reconaissance detection tool that monitors suspicious activity, flags attacker behaviour and help secure your infrastructure proactively
                         </p>
                     </div>
