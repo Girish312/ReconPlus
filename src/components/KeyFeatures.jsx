@@ -1,4 +1,37 @@
+
 import { useState, useEffect, useRef } from "react";
+
+// A dedicated component for the feature card with the new effects
+const FeatureCard = ({ feature }) => (
+  // Main container with 'group' class for hover effects
+  <div className="group relative overflow-hidden rounded-xl bg-[#0b1622] p-8 shadow-2xl transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-blue-500/50">
+
+    {/* The "Glow" Effect Container (requires 'after:' config in tailwind.config.js) */}
+    {/* This element creates the blurred blue light source */}
+    <div className="absolute inset-x-0 top-0 h-48">
+      <div className="absolute after:absolute after:h-full after:w-full after:rounded-full after:bg-blue-600/30 after:filter after:blur-3xl after:opacity-70 after:transition-opacity after:duration-500 after:group-hover:opacity-100"></div>
+    </div>
+
+    {/* Content Wrapper (Ensures content is above the glow) */}
+    <div className="relative z-10 flex flex-col items-center text-center space-y-6">
+
+      {/* Icon/Image Placeholder */}
+      <div className="w-20 h-20 rounded-full bg-[#0f2533] flex items-center justify-center">
+        <img src={feature.icon} alt={feature.title} className="w-20 h-20" />
+      </div>
+      
+      {/* Text Content */}
+      <h3 className="text-lg sm:text-xl font-semibold text-white">
+        {feature.title}
+      </h3>
+      <p className="text-sm sm:text-lg text-gray-400">
+        {feature.description}
+      </p>
+
+    </div>
+  </div>
+);
+
 
 export default function KeyFeatures() {
   const features = [
@@ -102,17 +135,8 @@ export default function KeyFeatures() {
                   key={i}
                   className="w-full sm:w-1/2 flex-shrink-0 px-3"
                 >
-                  <div className="bg-[#0b1622] rounded-3xl p-8 flex flex-col items-center text-center space-y-6 shadow-[0_0_40px_rgba(34,211,238,0.05)]">
-                    <div className="w-20 h-20 rounded-full bg-[#0f2533] flex items-center justify-center">
-                      <img src={feature.icon} alt={feature.title} className="w-20 h-20" />
-                    </div>
-                    <h3 className="text-lg sm:text-xl font-semibold text-white">
-                      {feature.title}
-                    </h3>
-                    <p className="text-sm sm:text-lg text-gray-400">
-                      {feature.description}
-                    </p>
-                  </div>
+                  {/* Using the new component here */}
+                  <FeatureCard feature={feature} />
                 </div>
               ))}
             </div>
@@ -122,20 +146,8 @@ export default function KeyFeatures() {
         {/* DESKTOP GRID */}
         <div className="hidden lg:grid grid-cols-4 gap-8 relative z-10">
           {features.map((feature, i) => (
-            <div
-              key={i}
-              className="bg-[#0b1622] rounded-3xl p-8 flex flex-col items-center text-center space-y-6 shadow-[0_0_40px_rgba(34,211,238,0.05)]"
-            >
-              <div className="w-20 h-20 rounded-full bg-[#0f2533] flex items-center justify-center">
-                <img src={feature.icon} alt={feature.title} className="w-20 h-20" />
-              </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-white">
-                {feature.title}
-              </h3>
-              <p className="text-sm sm:text-lg text-gray-400">
-                {feature.description}
-              </p>
-            </div>
+            // Using the new component here
+            <FeatureCard key={i} feature={feature} />
           ))}
         </div>
 
