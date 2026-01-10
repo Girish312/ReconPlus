@@ -57,7 +57,7 @@ export default function ProblemSection() {
             <h2 className="text-2xl sm:text-4xl font-bold text-white">
               The Problem
             </h2>
-            <p className="text-gray-300 text-lg sm:text-xl leading-relaxed">
+            <p className="text-gray-300 text-lg sm:text-xl leading-relaxed text-justify">
               Attackers begin by probing ports, endpoints & vulnerabilities long
               before launching a full attack. Most systems detect threats only
               after the damage is done, but ReconnPlus identifies these early-stage

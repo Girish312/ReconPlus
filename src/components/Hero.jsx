@@ -26,14 +26,14 @@ export default function Hero() {
                 ))}
             </div>
 
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
+            <div className="relative z-10 max-w-7xl  px-4 sm:px-6 lg:px-8 py-16 w-full">
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
-                    <div className="space-y-6 max-w-xl mx-auto lg:mx-0 animate-slideInLeft text-center lg:text-left">
-                        <h1 className="font-bold leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
+                    <div className="space-y-6 max-w-xl  lg:mx-0 animate-slideInLeft text-center lg:text-left">
+                        <h1 className="font-bold leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-left">
                             Detect threats <br className="hidden sm:block" />
                             before they detect you.
                         </h1>
-                        <p className="text-gray-300 text-lg sm:text-xl md:text-xl leading-relaxed max-w-lg mx-auto lg:mx-0 text-left">
+                        <p className="text-gray-300 text-lg sm:text-xl md:text-xl leading-relaxed max-w-lg lg:mx-0 text-left">
                             An AI powered reconaissance detection tool that monitors suspicious activity, flags attacker behaviour and help secure your infrastructure proactively
                         </p>
                     </div>
