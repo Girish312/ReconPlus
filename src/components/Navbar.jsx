@@ -25,17 +25,20 @@ export default function Navbar() {
     navigate(path, { state: { mode } });
     setMobileMenuOpen(false);
   };
+  const handleHomeNav = () => {
+    navigate('/'); // This is the command that performs the redirect
+    setMobileMenuOpen(false);
+  }
 
   return (
     <>
       <nav
-        className={`fixed w-full z-50 transition-all duration-200 ${
-          mobileMenuOpen
-            ? "bg-[#0a0e1a]"
-            : scrolled
+        className={`fixed w-full z-50 transition-all duration-200 ${mobileMenuOpen
+          ? "bg-[#0a0e1a]"
+          : scrolled
             ? "bg-[#0a0e1a]/95 backdrop-blur-md shadow-lg shadow-cyan-500/10"
             : "bg-transparent"
-        }`}
+          }`}
       >
         <div className="max-w-7xl px-3 sm:px-3 lg:px-4">
           <div className="flex justify-between items-center h-20">
@@ -47,7 +50,7 @@ export default function Navbar() {
                 className="h-24 w-auto sm:h-32 lg:h-40"
               />
               <div className="hidden md:flex items-center space-x-8">
-                <a href="#home" className="font-semibold hover:text-cyan-400">Home</a>
+                <button onClick={handleHomeNav} className="font-semibold hover:text-cyan-400">Home</button>
                 <a href="#about" className="font-semibold hover:text-cyan-400">About Us</a>
               </div>
             </div>
@@ -87,9 +90,8 @@ export default function Navbar() {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-[#0a0e1a] border-l border-cyan-500/30 transform transition-transform duration-300 ease-in-out z-[60] ${
-          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        } md:hidden`}
+        className={`fixed top-0 right-0 h-full w-64 bg-[#0a0e1a] border-l border-cyan-500/30 transform transition-transform duration-300 ease-in-out z-[60] ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          } md:hidden`}
       >
         <div className="flex flex-col h-full">
           {/* Sidebar Close Button */}
@@ -103,9 +105,15 @@ export default function Navbar() {
 
           {/* Sidebar Links */}
           <nav className="flex flex-col space-y-6 px-8 py-4">
-            <a href="#home" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-cyan-400 transition-colors duration-300 text-lg font-semibold">
+            <button
+              onClick={() => {
+                navigate("/");
+                setMobileMenuOpen(false);
+              }}
+              className="text-left text-white hover:text-cyan-400 transition-colors duration-300 text-lg font-semibold"
+            >
               Home
-            </a>
+            </button>
             <a href="#about" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-cyan-400 transition-colors duration-300 text-lg font-semibold">
               About Us
             </a>
