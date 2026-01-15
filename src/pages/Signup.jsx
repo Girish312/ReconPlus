@@ -134,10 +134,10 @@ export default function Signup() {
                       className="absolute right-3 top-1/2 -translate-y-1/2 flex text-gray-500 items-center justify-center"
                     >
                       <img
-                        src="/images/hidepass.png"
+                        src="/images/hide-pass.png"
                         alt="hidepass"
                         className="h-5 w-5"
-                      />
+                      /> {/*Localhost will find a file even if you type the name slightly wrong (e.g., hidePass.png vs hidepass.png), but Vercel will return a 404 error.*/}
                     </button>
                   </div>
                   <p className="text-sm  text-gray-400 mt-2">
