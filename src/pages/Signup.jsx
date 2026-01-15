@@ -51,7 +51,7 @@ export default function Signup() {
 
   return (
     <div
-      className="min-h-screen text-white bg-cover bg-center"
+      className="min-h-screen text-white bg-cover bg-no-repeat bg-fixed"
       style={{
         backgroundImage: "url('/images/backgrounds/signup-bg.png')",
       }}
@@ -62,14 +62,14 @@ export default function Signup() {
         <div className="w-full max-w-7xl flex flex-col lg:flex-row items-center gap-16">
 
           {/* LEFT SECTION */}
-          <div className="hidden lg:flex flex-col items-start w-1/2">
+          <div className="hidden lg:flex flex-col items-center w-1/2">
             <img
               src="/images/illustrations/security-illustration.png"
               alt="Security Illustration"
               className="w-[420px] mb-10"
             />
 
-            <h1 className="text-5xl font-bold leading-tight mb-4">
+            <h1 className="text-5xl font-bold leading-tight mb-4 text-center">
               All Insights.
               <br />
               One Platform.
@@ -82,7 +82,7 @@ export default function Signup() {
 
           {/* RIGHT SECTION - FORM */}
           <div className="w-full lg:w-1/2">
-            <div className="bg-gradient-to-br from-[#0f172a] to-[#020617] border border-cyan-500/30 rounded-3xl px-10 py-12 shadow-2xl">
+            <div className="bg-[linear-gradient(41deg,#171717_30%,#0B303C_96%,#0B303C_100%)] border border-cyan-500/30 rounded-3xl px-10 py-12 shadow-2xl">
 
               <h2 className="text-3xl font-bold mb-8 text-center">
                 {roleTitleMap[role] || "User"} Sign Up
@@ -141,7 +141,7 @@ export default function Signup() {
                     </button>
                   </div>
                   <p className="text-sm  text-gray-400 mt-2">
-                    Use 6 or more characters with a mix of numbers, letters and symbols
+                    Use 6 or more characters with a mix of numbers, letters and symbols.
                   </p>
                 </div>
 
