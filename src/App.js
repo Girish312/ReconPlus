@@ -3,6 +3,7 @@ import LandingPage from "./pages/Landing";
 import RoleSelection from "./pages/RoleSelection";
 import Signup from "./pages/Signup";
 import SignupSuccess from "./pages/SignupSuccess";
+import Signin from "./pages/Signin";
 
 export default function App() {
   return (
@@ -14,7 +15,7 @@ export default function App() {
         {/* Temporary placeholder routes */}
         <Route path="/signup/:role" element={<Signup />} />
         <Route path="/signup-success" element={<SignupSuccess />} />
-        <Route path="/signin/:role" element={<div className="min-h-screen bg-[#0a0e1a] text-white flex items-center justify-center">Sign In Page</div>} />
+        <Route path="/signin/:role" element={<Signin />} />
       </Routes>
     </Router>
   );
