@@ -9,11 +9,17 @@ export default function SignupSuccess() {
   const role = location.state?.role || "user";
 
   return (
-    <div className="min-h-screen bg-[#0a0e1a] text-white">
+    <div 
+      className="min-h-screen text-white bg-cover bg-no-repeat bg-fixed"
+      style={{
+        backgroundImage: "url('/images/backgrounds/signin-bg.png')",
+      }}
+    >
       <Navbar />
 
       <div className="pt-32 px-4 flex justify-center items-center">
-        <div className="w-full max-w-md bg-gradient-to-br from-[#0f172a] to-[#020617] border border-cyan-500/30 rounded-3xl px-10 py-14 text-center shadow-2xl">
+        {/* Added backdrop-blur-sm to make the card pop against the background image */}
+        <div className="w-full max-w-md bg-[linear-gradient(41deg,#171717_30%,#0B303C_96%,#0B303C_100%)] border border-cyan-500/30 rounded-3xl px-10 py-14 text-center shadow-2xl backdrop-blur-sm">
 
           {/* Title */}
           <h1 className="text-3xl font-bold mb-8">
@@ -30,7 +36,7 @@ export default function SignupSuccess() {
           {/* Button */}
           <button
             onClick={() => navigate(`/signin/${role}`)}
-            className="w-full py-3 rounded-md bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition"
+            className="w-full py-3 rounded-md bg-[#34B3DD] text-white font-semibold hover:bg-cyan-300 transition"
           >
             Sign In Here
           </button>
