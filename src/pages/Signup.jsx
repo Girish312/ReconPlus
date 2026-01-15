@@ -92,7 +92,7 @@ export default function Signup() {
 
                 {/* Name */}
                 <div>
-                  <label className="block text-sm mb-2">Name</label>
+                  <label className="block text-base mb-2">Name</label>
                   <input
                     type="text"
                     name="name"
@@ -105,7 +105,7 @@ export default function Signup() {
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm mb-2">Email ID</label>
+                  <label className="block text-base mb-2">Email ID</label>
                   <input
                     type="email"
                     name="email"
@@ -118,7 +118,7 @@ export default function Signup() {
 
                 {/* Password */}
                 <div>
-                  <label className="block text-sm mb-2">Password</label>
+                  <label className="block text-base mb-2">Password</label>
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}
@@ -131,19 +131,23 @@ export default function Signup() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-gray-500"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 flex text-gray-500 items-center justify-center"
                     >
-                      👁
+                      <img
+                        src="/images/hidepass.png"
+                        alt="hidepass"
+                        className="h-5 w-5 object-contain"
+                      />
                     </button>
                   </div>
-                  <p className="text-xs text-gray-400 mt-2">
+                  <p className="text-sm  text-gray-400 mt-2">
                     Use 6 or more characters with a mix of numbers, letters and symbols
                   </p>
                 </div>
 
                 {/* Confirm Password */}
                 <div>
-                  <label className="block text-sm mb-2">Repeat Password</label>
+                  <label className="block text-base mb-2">Repeat Password</label>
                   <input
                     type="password"
                     name="confirmPassword"
