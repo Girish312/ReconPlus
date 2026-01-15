@@ -136,7 +136,7 @@ export default function Signup() {
                       <img
                         src="/images/hidepass.png"
                         alt="hidepass"
-                        className="h-5 w-5 object-contain"
+                        className="h-5 w-5"
                       />
                     </button>
                   </div>
