@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 export default function Toast({ message, type = "error", duration = 3000, onClose }) {
   useEffect(() => {
