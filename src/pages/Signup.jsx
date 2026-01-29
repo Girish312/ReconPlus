@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Toast from "../components/Toast";
+// 🔹 Step A: Added Firebase Imports
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../firebase/firebase";
 
 export default function Signup() {
   const { role } = useParams();
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,27 +36,85 @@ export default function Signup() {
     });
   };
 
-  const handleSubmit = (e) => {
+  // ⚠️ Function is now async
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Temporary validation
+    // Prevent multiple submissions
+    if (loading) return;
+    setLoading(true);
+
     if (!formData.terms) {
-      alert("Please accept the terms");
+      setToast({ message: "Please accept the terms", type: "warning" });
+      setLoading(false);
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
+      setToast({ message: "Passwords do not match", type: "warning" });
+      setLoading(false);
       return;
     }
 
-    // Later: send data + role to backend
-    console.log("Signup data:", { ...formData, role });
+    // ✅ NEW: Firebase Auth + Firestore logic
+    try {
+      // Create Firebase Auth account first
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
 
-    navigate("/signup-success", { state: { role } });
+      const user = userCredential.user;
+
+      // Store user data in Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        name: formData.name,
+        email: formData.email,
+        role: role,
+        createdAt: new Date(),
+      });
+
+      // Show success toast and navigate to signup success page
+      setToast({
+        message: "Account created successfully! Redirecting...",
+        type: "success",
+        duration: 1500,
+      });
+      
+      // Navigate to signup success page after brief delay
+      setTimeout(() => {
+        navigate("/signup-success", { state: { role } });
+      }, 500);
+
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        setToast({
+          message: "This email is already registered. Please sign in instead.",
+          type: "error",
+        });
+      } else if (error.code === "auth/weak-password") {
+        setToast({
+          message: "Password should be at least 6 characters.",
+          type: "error",
+        });
+      } else if (error.code === "auth/invalid-email") {
+        setToast({
+          message: "Invalid email address.",
+          type: "error",
+        });
+      } else {
+        setToast({
+          message: error.message || "Signup failed. Please try again.",
+          type: "error",
+        });
+      }
+      setLoading(false);
+    }
   };
 
   return (
+    <>
     <div
       className="min-h-screen text-white bg-cover bg-no-repeat bg-fixed"
       style={{
@@ -137,7 +202,7 @@ export default function Signup() {
                         src="/images/hide-pass.png"
                         alt="hidepass"
                         className="h-5 w-5"
-                      /> {/*Localhost will find a file even if you type the name slightly wrong (e.g., hidePass.png vs hidepass.png), but Vercel will return a 404 error.*/}
+                      />
                     </button>
                   </div>
                   <p className="text-sm  text-gray-400 mt-2">
@@ -178,9 +243,10 @@ export default function Signup() {
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="w-full mt-6 py-3 rounded-md bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition"
+                  disabled={loading}
+                  className="w-full mt-6 py-3 rounded-md bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Sign Up
+                  {loading ? "Creating Account..." : "Sign Up"}
                 </button>
 
                 {/* Sign In Link */}
@@ -200,5 +266,15 @@ export default function Signup() {
         </div>
       </div>
     </div>
+
+    {toast && (
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        duration={toast.duration}
+        onClose={() => setToast(null)}
+      />
+    )}
+    </>
   );
 }

@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Toast from "../components/Toast";
+// 🔹 Step A: Added Firebase Imports
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../firebase/firebase";
 
 export default function Signin() {
     const { role } = useParams();
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
+    const [toast, setToast] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -26,17 +33,61 @@ export default function Signin() {
         });
     };
 
-    const handleSubmit = (e) => {
+    // ⚠️ Updated to be async
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
 
-        // Temporary: only navigation for now
-        console.log("Signin data:", { ...formData, role });
+        // 🔹 Step B: Modified handleSubmit Logic
+        try {
+            const userCredential = await signInWithEmailAndPassword(
+                auth,
+                formData.email,
+                formData.password
+            );
 
-        // Later → dashboard based on role
-        alert(`Signed in as ${role}`);
+            const user = userCredential.user;
+
+            // Redirect to dashboard immediately - let Dashboard handle Firestore fetching
+            navigate("/dashboard", { state: { role } });
+            
+            // Optionally fetch role in background, but don't wait for it
+            getDoc(doc(db, "users", user.uid)).catch(err => {
+                console.error("Background role fetch failed:", err);
+            });
+        } catch (error) {
+            setIsLoading(false);
+            if (error.code === "auth/user-not-found") {
+                setToast({
+                    message: "Email not found. Please sign up first.",
+                    type: "error",
+                });
+            } else if (error.code === "auth/wrong-password") {
+                setToast({
+                    message: "Incorrect password. Please try again.",
+                    type: "error",
+                });
+            } else if (error.code === "auth/invalid-credential") {
+                setToast({
+                    message: "Email or password is incorrect. Please try again.",
+                    type: "error",
+                });
+            } else if (error.code === "auth/invalid-email") {
+                setToast({
+                    message: "Please enter a valid email address.",
+                    type: "error",
+                });
+            } else {
+                setToast({
+                    message: error.message || "Sign in failed. Please try again.",
+                    type: "error",
+                });
+            }
+        }
     };
 
     return (
+        <>
         <div
             className="min-h-screen text-white bg-cover bg-no-repeat bg-fixed"
             style={{
@@ -86,7 +137,7 @@ export default function Signin() {
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-3 top-3 text-gray-500"
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center text-gray-500"
                                         >
                                             <img
                                                 src="/images/hide-pass.png"
@@ -100,9 +151,17 @@ export default function Signin() {
                                 {/* Sign In Button */}
                                 <button
                                     type="submit"
-                                    className="w-full py-3 rounded-md bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition"
+                                    disabled={isLoading}
+                                    className="w-full py-3 rounded-md bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                 >
-                                    Sign In
+                                    {isLoading ? (
+                                        <>
+                                            <div className="animate-spin rounded-full h-4 w-4 border-2 border-black border-t-transparent"></div>
+                                            Signing in...
+                                        </>
+                                    ) : (
+                                        "Sign In"
+                                    )}
                                 </button>
 
                                 {/* Create Account */}
@@ -143,5 +202,15 @@ export default function Signin() {
                 </div>
             </div>
         </div>
+
+        {toast && (
+            <Toast
+                message={toast.message}
+                type={toast.type}
+                duration={toast.duration}
+                onClose={() => setToast(null)}
+            />
+        )}
+        </>
     );
 }
