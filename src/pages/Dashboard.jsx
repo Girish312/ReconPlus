@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import NavbarDashboard from "../components/NavbarDashboard";
+import UserDashboard from "./UserDashboard";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -12,18 +12,15 @@ export default function Dashboard() {
   useEffect(() => {
     let isMounted = true;
 
-    // Check if user is logged in
     const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
       if (!isMounted) return;
 
       if (!currentUser) {
-        // Not logged in - redirect immediately to home
         navigate("/", { replace: true });
         return;
       }
 
       try {
-        // Fetch user data from Firestore to get name, role, and other info
         const userDocRef = doc(db, "users", currentUser.uid);
         const userDocSnap = await getDoc(userDocRef);
 
@@ -36,7 +33,6 @@ export default function Dashboard() {
             role: userData.role || "user",
           });
         } else {
-          // Firestore document doesn't exist yet, use auth data
           setUser({
             uid: currentUser.uid,
             email: currentUser.email,
@@ -46,7 +42,6 @@ export default function Dashboard() {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        // Fallback to auth data if Firestore fails
         setUser({
           uid: currentUser.uid,
           email: currentUser.email,
@@ -75,14 +70,18 @@ export default function Dashboard() {
     );
   }
 
+  // Route to role-based dashboard
+  if (user?.role === "user") {
+    return <UserDashboard />;
+  }
+
+  // Admin and Analyst dashboards coming soon
   return (
-    <div className="min-h-screen bg-[#0a0e1a] text-white">
-      {user && (
-        <NavbarDashboard 
-          userName={user?.name || user?.email} 
-          userRole={user?.role} 
-        />
-      )}
+    <div className="min-h-screen bg-[#0a0e1a] text-white flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
+        <p className="text-gray-400">Dashboard for {user?.role} role coming soon...</p>
+      </div>
     </div>
   );
 }

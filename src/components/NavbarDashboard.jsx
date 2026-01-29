@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 
-export default function NavbarDashboard({ userName, userRole }) {
+export default function NavbarDashboard({ userName, userRole, dashboardType = "admin", activeTab = "overview", setActiveTab }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -62,17 +62,40 @@ export default function NavbarDashboard({ userName, userRole }) {
                 alt="ReconPlus Logo"
                 className="h-24 w-auto sm:h-32 lg:h-40"
               />
-              <div className="hidden md:flex items-center space-x-8">
-                <button
-                  onClick={() => handleNav("/dashboard")}
-                  className="font-semibold hover:text-cyan-400"
-                >
-                  Dashboard
-                </button>
-                <a href="#features" className="font-semibold hover:text-cyan-400">
-                  Features
-                </a>
-              </div>
+              
+              {/* Tabs for User Dashboard */}
+              {dashboardType === "user" && (
+                <div className="hidden md:flex items-center space-x-1 bg-[#0a0e1a]/50 rounded-lg p-1 border border-cyan-500/20">
+                  {["overview", "tools", "history", "access-token"].map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      className={`px-4 py-2 rounded-md text-sm font-semibold transition-all ${
+                        activeTab === tab
+                          ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30"
+                          : "text-gray-300 hover:text-cyan-400"
+                      }`}
+                    >
+                      {tab.charAt(0).toUpperCase() + tab.slice(1).replace("-", " ")}
+                    </button>
+                  ))}
+                </div>
+              )}
+              
+              {/* Admin/Analyst Dashboard Links */}
+              {dashboardType !== "user" && (
+                <div className="hidden md:flex items-center space-x-8">
+                  <button
+                    onClick={() => handleNav("/dashboard")}
+                    className="font-semibold hover:text-cyan-400"
+                  >
+                    Dashboard
+                  </button>
+                  <a href="#features" className="font-semibold hover:text-cyan-400">
+                    Features
+                  </a>
+                </div>
+              )}
             </div>
 
             {/* Right Section: Desktop User Menu */}
