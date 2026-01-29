@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Toast from "../components/Toast";
 // 🔹 Step A: Added Firebase Imports
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 
@@ -48,13 +48,42 @@ export default function Signin() {
 
             const user = userCredential.user;
 
-            // Redirect to dashboard immediately - let Dashboard handle Firestore fetching
+            // Fetch user data from Firestore to check role
+            const userDocSnap = await getDoc(doc(db, "users", user.uid));
+
+            if (!userDocSnap.exists()) {
+                // User authenticated but no Firestore record - shouldn't happen
+                await signOut(auth);
+                setToast({
+                    message: "User data not found. Please sign up again.",
+                    type: "error",
+                });
+                setIsLoading(false);
+                return;
+            }
+
+            const userData = userDocSnap.data();
+            const userRole = userData.role;
+
+            // Check if the role matches
+            if (userRole !== role) {
+                // Role mismatch - sign them out and show error
+                await signOut(auth);
+                const roleTitleMap = {
+                    admin: "Admin",
+                    analyst: "Analyst",
+                    user: "User",
+                };
+                setToast({
+                    message: `This email is already registered as ${roleTitleMap[userRole]}. Please sign in through the ${roleTitleMap[userRole]} role instead.`,
+                    type: "error",
+                });
+                setIsLoading(false);
+                return;
+            }
+
+            // Role matches - redirect to dashboard
             navigate("/dashboard", { state: { role } });
-            
-            // Optionally fetch role in background, but don't wait for it
-            getDoc(doc(db, "users", user.uid)).catch(err => {
-                console.error("Background role fetch failed:", err);
-            });
         } catch (error) {
             setIsLoading(false);
             if (error.code === "auth/user-not-found") {
