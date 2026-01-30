@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // from Vercel env vars
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 export default async function handler(req, res) {
@@ -22,19 +22,25 @@ Vulnerabilities: ${JSON.stringify(vulnerabilities)}
 Explain risks in simple language and suggest clear fixes.
 `;
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: message },
+    const response = await client.responses.create({
+      model: "gpt-4.1-mini",
+      input: [
+        {
+          role: "system",
+          content: systemPrompt,
+        },
+        {
+          role: "user",
+          content: message,
+        },
       ],
     });
 
     res.status(200).json({
-      reply: completion.choices[0].message.content,
+      reply: response.output_text,
     });
   } catch (error) {
-    console.error(error);
+    console.error("AI ERROR:", error);
     res.status(500).json({ reply: "AI service unavailable." });
   }
 }
