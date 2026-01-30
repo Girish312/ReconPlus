@@ -17,12 +17,6 @@ export default function ChatWidget({ riskScores, vulnerabilities }) {
         try {
             const res = await fetch("/api/ai-chat", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    message: input,
-                    riskScores,
-                    vulnerabilities,
-                }),
             });
 
             const data = await res.json();

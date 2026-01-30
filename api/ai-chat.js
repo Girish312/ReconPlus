@@ -1,46 +1,29 @@
 import OpenAI from "openai";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
+    return res.status(405).json({ error: "Only POST allowed" });
   }
 
   try {
-    const { message, riskScores, vulnerabilities } = req.body;
+    console.log("ENV KEY EXISTS:", !!process.env.OPENAI_API_KEY);
 
-    const systemPrompt = `
-You are an AI cybersecurity assistant for a vulnerability monitoring platform.
-
-Current system data:
-Risk Scores: ${JSON.stringify(riskScores)}
-Vulnerabilities: ${JSON.stringify(vulnerabilities)}
-
-Explain risks in simple language and suggest clear fixes.
-`;
+    const client = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     const response = await client.responses.create({
       model: "gpt-4.1-mini",
-      input: [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: message,
-        },
-      ],
+      input: "Say hello in one sentence",
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       reply: response.output_text,
     });
-  } catch (error) {
-    console.error("AI ERROR:", error);
-    res.status(500).json({ reply: "AI service unavailable." });
+  } catch (err) {
+    console.error("SERVER ERROR:", err);
+    return res.status(500).json({
+      error: err.message || "Server crash",
+    });
   }
 }
