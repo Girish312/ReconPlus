@@ -34,7 +34,7 @@ export default function RiskScoreCard({ data }) {
             </Pie>
             <Tooltip 
               contentStyle={{ 
-                backgroundColor: "#0a0e1a", 
+                backgroundColor: "rgba(255, 255, 255, 0.8)", 
                 border: "1px solid #06b6d4",
                 borderRadius: "8px"
               }}
