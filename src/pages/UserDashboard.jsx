@@ -8,7 +8,6 @@ import VulnerabilityRiskSummary from "../components/VulnerabilityRiskSummary";
 import RiskSummary from "../components/RiskSummary";
 import KeyVulnerabilities from "../components/KeyVulnerabilities";
 import SecurityScanStatus from "../components/SecurityScanStatus";
-import ChatWidget from "../components/ChatWidget";
 
 
 export default function UserDashboard() {
@@ -164,10 +163,6 @@ export default function UserDashboard() {
           )}
         </div>
       </div>
-      <ChatWidget
-        riskScores={toolsData.riskScores}
-        vulnerabilities={toolsData.vulnerabilities}
-      />
     </div>
   );
 }
